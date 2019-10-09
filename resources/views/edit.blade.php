@@ -17,32 +17,41 @@
         <form method="post" action="{{ route('contacts.update', $contact->id) }}">
             @method('PATCH') 
             @csrf
+            {{-- <div class="form-group">
+
+                <label for="id">ID :</label>
+                <input type="number" class="form-control" name="id" value={{ $contact->id }} />
+            </div> --}}
             <div class="form-group">
 
-                <label for="first_name">First Name:</label>
-                <input type="text" class="form-control" name="first_name" value={{ $contact->first_name }} />
+                <label for="u_name">User Name:</label>
+                <input type="text" class="form-control" name="u_name" value="{{ $contact->u_name }}" />
             </div>
 
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label for="last_name">Last Name:</label>
-                <input type="text" class="form-control" name="last_name" value={{ $contact->last_name }} />
-            </div>
+                <input type="text" class="form-control" name="last_name" value="{{ $contact->last_name }}" />
+            </div> --}}
 
             <div class="form-group">
                 <label for="email">Email:</label>
-                <input type="text" class="form-control" name="email" value={{ $contact->email }} />
+                <input type="text" class="form-control" name="email" value="{{ $contact->email }}" />
             </div>
             <div class="form-group">
                 <label for="city">City:</label>
-                <input type="text" class="form-control" name="city" value={{ $contact->city }} />
+
+                {{-- @php --}}
+               {{-- // dd($contact->city); --}}
+                {{-- @endphp --}}
+                <input type="text" class="form-control" name="city" value='{!! $contact['city'] !!}'  />
             </div>
             <div class="form-group">
                 <label for="country">Country:</label>
-                <input type="text" class="form-control" name="country" value={{ $contact->country }} />
+                <input type="text" class="form-control" name="country" value="{{ $contact->country }}" />
             </div>
             <div class="form-group">
                 <label for="job_title">Job Title:</label>
-                <input type="text" class="form-control" name="job_title" value={{ $contact->job_title }} />
+                <input type="text" class="form-control" name="job_title" value="{{$contact->job_title }}" />
             </div>
             <button type="submit" class="btn btn-primary">Update</button>
         </form>

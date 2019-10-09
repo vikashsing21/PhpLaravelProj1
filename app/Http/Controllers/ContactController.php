@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Contact;
+use App\Tasks;
 
 class ContactController extends Controller
 {
@@ -38,20 +39,19 @@ class ContactController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'first_name'=>array('required',
-            'regex:/^([a-z]+)$/'                           
+            
+            'u_name'=>array('required',
+            'regex:/^[a-zA-Z]+(?:[\s.]+[a-zA-Z]+)*$/'                           
         ),
-            'last_name'=>array('required',
-            'regex:/^([a-z]+)$/'                           
-        ),
+            
             'email'=>array('required',
                             'unique:contacts',
-                            'regex:/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/')
+                            'email')
         ]);
 
         $contact = new Contact([
-            'first_name' => $request->get('first_name'),
-            'last_name' => $request->get('last_name'),
+            'id' => $request->get('id'),
+            'u_name' => $request->get('u_name'),
             'email' => $request->get('email'),
             'job_title' => $request->get('job_title'),
             'city' => $request->get('city'),
@@ -67,15 +67,19 @@ class ContactController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Contact $contact)
     {
         //
+        $a = Tasks::find($contact->id)->tasks;
+        //        $a=Product::where('brand_id',$brand->id)->get();
+        
+                return view('show',compact('contact','a'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -94,19 +98,15 @@ class ContactController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'first_name'=>array('required',
-            'regex:/^([a-z]+)$/'                           
-        ),
-            'last_name'=>array('required',
-            'regex:/^([a-z]+)$/'                           
+            'u_name'=>array('required'                          
         ),
             'email'=>array('required',
-                            'unique:contacts',
-                            'regex:/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/')
+                            // 'unique:contacts',
+                            'email')
         ]);
         $contact = Contact::find($id);
-        $contact->first_name =  $request->get('first_name');
-        $contact->last_name = $request->get('last_name');
+        $contact->u_name =  $request->get('u_name');
+       
         $contact->email = $request->get('email');
         $contact->job_title = $request->get('job_title');
         $contact->city = $request->get('city');

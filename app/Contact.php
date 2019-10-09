@@ -14,6 +14,10 @@ class Contact extends Model
     //     'country',
     //     'job_title'       
     // ];
-    protected $table='contacts';
+    
     protected $guarded=[];
+    public function Tasks()
+    {
+        return $this->hasMany('App\Tasks');
+    }
 }
