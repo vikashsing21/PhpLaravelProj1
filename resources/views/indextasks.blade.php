@@ -4,7 +4,7 @@
 <div class="row">
 <div class="col-sm-12">
     <h1 class="display-3">Tasks</h1>    
-  <table class="table table-striped" border="1">
+  <table class="table table-striped" border="1" id="laravel_datatable">
     <thead>
         <tr>
           
@@ -12,7 +12,7 @@
         
           <td colspan=6>Name</td>
           <td colspan=4>Description</td>
-          <td colspan="4">User ID</td>
+          <td colspan="4">User Name</td>
           <td colspan = 2>Actions</td>
         </tr>
     </thead>
@@ -42,10 +42,18 @@
         </tr>
         @endforeach
     </tbody>
-  </table>
- 
-<div>
+    
+    <div class="col-sm-10">
+    <label for="name">Tasks :</label>
+    <select name='usersel' id='usersel' onchange="top.location.href = this.options[this.selectedIndex].value">
+        <option value="" selected>Select</option>
+        @foreach ($tname as $key=>$task)
+        <option value="{{ route("tasks.show", $key) }}">{{$task}}</option>
+        @endforeach
+    </select>
 </div>
+</table>
+
 <div class="col-sm-12">
 
     @if(session()->get('success'))

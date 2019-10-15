@@ -16,4 +16,5 @@ Route::get('/', function () {
 });
 Route::resource('contacts', 'ContactController');
 Route::resource('tasks', 'TaskController');
+Route::get('users-list', 'TaskController@userList'); 
 //Route::apiResource('contacts', 'ContactController');

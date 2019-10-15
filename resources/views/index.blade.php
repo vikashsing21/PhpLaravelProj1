@@ -26,7 +26,6 @@
         <tr>
             
             <td colspan=2>{{$contact->id}}</td>
-            
             <td colspan=4>{{$contact->u_name}}</td>
             <td colspan =6>{{$contact->email}}</td>
             <td colspan="4">{{$contact->job_title}}</td>

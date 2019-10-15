@@ -7,6 +7,7 @@ use App\Tasks;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+
 class TaskController extends Controller
 {
     /**
@@ -17,8 +18,14 @@ class TaskController extends Controller
     public function index()
     {
         //
+        $contacts=Contact::all();
         $tasks=Tasks::all();
-        return view('indextasks',compact('tasks'));
+        $id=501;
+
+        // $tasks = Tasks::where('user_id','=',$id)->get();
+        
+        $tname=$contacts->sortBy('u_name')->pluck('u_name','id');
+        return view('indextasks',compact('tasks','tname'));
     }
 
     /**
@@ -43,7 +50,7 @@ class TaskController extends Controller
     {
         //
         $request->validate([
-            'name'=>'required',
+            'name'=>'required:unique:tasks',
             'description'=>'required',
             'user_id'=>'required'
         ]);
@@ -65,9 +72,15 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($key)
     {
-        //
+        $contacts=Contact::all();
+        
+        $tasks = Tasks::where('user_id','=',$key)->get();
+        $tname=$contacts->sortBy('u_name')->pluck('u_name','id');
+        return view('indextasks',compact('tasks','tname'));
+        
+       
     }
 
     /**
@@ -84,6 +97,8 @@ class TaskController extends Controller
         return view('edittasks', compact('tasks','contacts')); 
     }
 
+    
+
     /**
      * Update the specified resource in storage.
      *
@@ -94,6 +109,7 @@ class TaskController extends Controller
     public function update(Request $request, $id)
     {
         //
+       
         $request->validate([
             'name'=>'required',
             'description'=>'required',
@@ -117,8 +133,8 @@ class TaskController extends Controller
     public function destroy($id)
     {
         //
-        $contact = Contact::find($id);
-        $contact->delete();
+        $tasks = Tasks::find($id);
+        $tasks->delete();
 return redirect('tasks')->with('success', 'Task deleted!');
     }
 }
